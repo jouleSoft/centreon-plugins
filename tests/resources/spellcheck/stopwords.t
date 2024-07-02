@@ -1,5 +1,7 @@
 --add-sysdesc
+--api-filter-orgs
 --api-password
+--api-token
 --api-version
 --cacert-file
 --cert-pkcs12
@@ -11,10 +13,12 @@
 --exclude-fs
 --filter-fs
 --filter-vdom
+--filter-vm
 --force-counters32
 --force-counters64
 --force-oid
 --get-param
+--ignore-orgs-api-disabled
 --lookup-perfdatas-nagios
 --map-speed-dsl
 --mqtt
@@ -34,6 +38,9 @@
 --oid-filter
 --urlpath
 --warning-bytesallocatedpercentage
+-EncodedCommand
+-InputFormat
+-NoLogo
 2c
 ADSL
 Avigilon
@@ -47,6 +54,7 @@ Iwsva
 Loggly
 MBean
 MQTT
+Meraki
 Mosquitto
 NTLMv2
 NagVis
@@ -59,11 +67,17 @@ SNMP
 SSH
 Sansymphony
 SureBackup
-TendMicro
+TCP
+TrendMicro
 VDSL2
+VM
 Veeam
+VPN
 WSMAN
 XPath
+api.meraki.com
+connections-dhcp
+connections-dns
 deltaps
 df
 eth
@@ -86,6 +100,7 @@ out-mcast
 out-ucast
 perfdata
 powershell
+powershell.exe
 proto
 psu
 queue-messages-inflighted
@@ -93,6 +108,8 @@ space-usage-prct
 teampass
 timeframe
 topic-messages-inflighted
+total-offline-prct
+total-online-prct
 total-oper-down
 total-oper-up
 uptime
