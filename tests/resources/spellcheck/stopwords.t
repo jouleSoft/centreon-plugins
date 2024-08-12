@@ -10,6 +10,8 @@
 --cacert-file
 --cert-pkcs12
 --cert-pwd
+--critical-backend-congestions
+--critical-backend-outstanding-io
 --critical-bytesallocatedpercentage
 --display-transform-dst
 --display-transform-src
@@ -46,6 +48,8 @@
 --sql-errors-exit
 --urlpath
 --use-ucd
+--warning-backend-congestions
+--warning-backend-outstanding-io
 --warning-bytesallocatedpercentage
 -EncodedCommand
 -InputFormat
@@ -109,6 +113,7 @@ VDSL2
 VM
 VPN
 Veeam
+vSAN
 WSMAN
 XPath
 allCapacity
