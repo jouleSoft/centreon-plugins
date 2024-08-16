@@ -50,10 +50,18 @@ use warnings;
 use Sys::Syslog qw(:standard :macros);
 use IO::Handle;
 
-my %severities = (1 => LOG_INFO,
-                  2 => LOG_ERR,
-                  4 => LOG_DEBUG);
-
+my %severities = (
+    1 => LOG_INFO,
+    2 => LOG_ERR,
+    4 => LOG_DEBUG,
+    7 => LOG_CRIT
+);
+my %human_severities = (
+    1 => 'error',
+    2 => 'info',
+    4 => 'debug',
+    7 => 'fatal'
+);
 sub new {
     my $class = shift;
 
@@ -140,7 +148,7 @@ sub severity {
     my $self = shift;
     if (@_) {
         my $save_severity = $self->{severity};
-        if ($_[0] =~ /^[012347]$/) {
+        if ($_[0] =~ /^[0123478]$/) {
             $self->{severity} = $_[0];
         } elsif ($_[0] eq "none") {
             $self->{severity} = 0;
@@ -176,11 +184,14 @@ sub get_date {
 
 sub writeLog($$$%) {
     my ($self, $severity, $msg, %options) = @_;
+
     my $withdate = (defined $options{withdate}) ? $options{withdate} : 1;
     $msg = ($self->{withpid} == 1) ? "$$ - $msg " : $msg;
-    my $newmsg = ($withdate) 
-      ? $self->get_date . " - $msg" : $msg;
 
+    my $newmsg = ($withdate) 
+      ? "[" . $self->get_date . "] " : '';
+    $newmsg .= "[" . $human_severities{$severity} . "] " . $msg;
+    # Bit mask: if AND gives 0 it means the log level does not require this message to be logged
     if (($self->{severity} & $severity) == 0) {
         return;
     }
@@ -205,6 +216,11 @@ sub writeLogInfo {
 
 sub writeLogError {
     shift->writeLog(1, @_);
+}
+sub writeLogFatal {
+    shift->writeLog(7, @_);
+    print("FATAL: " . $_[0] . "\n");
+    exit(1);
 }
 
 sub DESTROY {
